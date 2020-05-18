@@ -1,27 +1,23 @@
 class JoinGroupsController < ApplicationController
-  before_action :set_group, only: :create
-  before_action :set_member, only: :create
+  before_action :set_group, only: %i[create destroy]
+  before_action :set_member, only: %i[create destroy]
 
   def create
     if @group.join_group_members.find_by(id: @member)
-      flash[:warning] = "#{@member.name}さんは参加済です"
-      redirect_to @group
+      redirect_to @group, notice: "#{@member.name}さんは参加済です"
     else
       @group.join_groups.create(member_id: @member.id)
-      flash[:warning] = "#{@member.name}さんがグループへ加入しました"
-      redirect_to @group
+      redirect_to @group, notice: "#{@member.name}さんがグループに加入しました"
     end
   end
 
   def destroy
-    @join_group = JoinGroup.find(params[:id])
-    if current_member.id == @join_group.member_id
+    @join_group = JoinGroup.find_by(group_id: @group, member_id: @member)
+    if @member.id == @join_group.member_id
       @join_group.destroy
-      flash[:success] = 'グループを脱退しました。'
-      redirect_to groups_path
+      redirect_to @group, notice: "#{@member.name}さんはこのグループから脱退しました"
     else
-      flash[:danger] = '不正な値が入力されました。'
-      redirect_to groups_path
+      redirect_to @group, notice: "不正な値が入力されました"
     end
   end
   
