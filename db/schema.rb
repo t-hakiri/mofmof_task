@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(version: 2020_05_18_121038) do
 
   create_table "join_groups", force: :cascade do |t|
     t.integer "group_id"
-    t.integer "user_id"
+    t.integer "member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_join_groups_on_group_id"
-    t.index ["user_id"], name: "index_join_groups_on_user_id"
+    t.index ["member_id"], name: "index_join_groups_on_member_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -34,5 +34,5 @@ ActiveRecord::Schema.define(version: 2020_05_18_121038) do
   end
 
   add_foreign_key "join_groups", "groups"
-  add_foreign_key "join_groups", "users"
+  add_foreign_key "join_groups", "members"
 end
