@@ -71,7 +71,7 @@ class GroupsController < ApplicationController
     next_organizer_id = @group_members.random
 
     if @group_members.count <= 1 && @organizer_id == next_organizer_id
-      redirect_to @group, notice: "memberが足りないため変更ができません。" and return
+      redirect_to @group, notice: t('groups.set_organizer.not_enough_members') and return
     elsif @organizer_id.present?
       while @organizer_id == next_organizer_id
         next_organizer_id = @group_members.random
@@ -79,7 +79,7 @@ class GroupsController < ApplicationController
       @group.join_groups.find_by(member_id: @organizer_id ).update(organizer: false)
     end
     @group.join_groups.find_by(member_id: next_organizer_id ).update(organizer: true)
-    redirect_to @group, notice: "主催者を変更しました" and return
+    redirect_to @group, notice: t('groups.set_organizer.success') and return
   end
 
   def check_organizer

@@ -1,0 +1,27 @@
+ja:
+  groups:
+    new:
+      
+    show:
+      join_members: 'グループに参加中のメンバー'
+      title: 'のメンバー一覧'
+      leave_group: '脱退'
+      confirm_leave_group: '本当に脱退しますか？'
+      set_organizer: '幹事を設定する'
+      confirm_set_organizer: 'ランダムに幹事を設定しますか？'
+      no_members: 'メンバーはいません'
+      not_belong_members: 'グループに未参加のメンバー'
+      join: '参加'
+
+    set_organizer:
+      success: 主催者を変更しました
+      not_enough_members: memberが足りないため変更ができません
+
+  join_groups:
+    create:
+      participating: 'さんは参加済です'
+      success: 'さんがグループに加入しました'
+
+    destroy:
+      success: 'さんはこのグループから脱退しました'
+      error: '不正な値が入力されました'

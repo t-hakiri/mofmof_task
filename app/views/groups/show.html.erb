@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= "#{@group.name}のメンバー一覧" %></h1>
+<h1><%= "#{@group.name}" + t('groups.show.title') %></h1>
 
-<h3>グループに参加中のメンバー</h3>
+<h3><%= t('groups.show.join_members') %></h3>
 <% if @group.join_group_members.present? %>
   <table>
     <thead>
@@ -20,18 +20,18 @@
           <td><%= @organizer_id == group_member.id ? "organizer" : "member" %></td>
 
           <td>
-            <%= link_to '脱退する', join_group_path(group_id: @group.id, member_id: group_member.id), method: :delete, data: { confirm: '本当に脱退しますか？' } %>
+            <%= link_to t('groups.show.leave_group'), join_group_path(group_id: @group.id, member_id: group_member.id), method: :delete, data: { confirm: t('groups.show.confirm_leave_group') } %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= link_to '幹事を設定する', set_organizer_group_path(group_id: @group.id), method: :patch, data: { confirm: 'ランダムに幹事を設定しますか？' } %>
+  <%= link_to t('groups.show.set_organizer'), set_organizer_group_path(group_id: @group.id), method: :patch, data: { confirm: t('groups.show.confirm_set_organizer') } %>
 <% else %>
-  <p>メンバーはいません</p>
+  <p><%= t('groups.show.no_members') %></p>
 <% end %>
 
-<h3>グループに未参加のメンバー</h3>
+<h3><%= t('groups.show.not_belong_members') %></h3>
 <table>
   <thead>
     <tr>
@@ -44,7 +44,7 @@
     <% @not_belong_members.each do |a| %>
       <tr>
         <td><%= a.name %></td>
-        <td><%= link_to '参加', join_groups_path(group_id: @group.id, member_id: a.id), method: :post %></td>
+        <td><%= link_to t('groups.show.join'), join_groups_path(group_id: @group.id, member_id: a.id), method: :post %></td>
       </tr>
       <% end %>
   </tbody>
