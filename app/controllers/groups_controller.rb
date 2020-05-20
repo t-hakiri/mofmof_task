@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :set_organizer]
 
   # GET /groups
   # GET /groups.json
@@ -10,7 +10,10 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
-    @member = Member.all
+    group_member_ids = @group.join_groups.map {|x| x.member_id}
+    @not_belong_members = Member.all.where.not(id: group_member_ids)
+
+    check_organizer
   end
 
   # GET /groups/new
@@ -59,6 +62,29 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def set_organizer
+    check_organizer
+    @group_members = @group.join_group_members
+    next_organizer_id = @group_members.random
+
+    if @group_members.count <= 1 && @organizer_id == next_organizer_id
+      redirect_to @group, notice: "memberが足りないため変更ができません。" and return
+    elsif @organizer_id.present?
+      while @organizer_id == next_organizer_id
+        next_organizer_id = @group_members.random
+      end
+      @group.join_groups.find_by(member_id: @organizer_id ).update(organizer: false)
+    end
+    @group.join_groups.find_by(member_id: next_organizer_id ).update(organizer: true)
+    redirect_to @group, notice: "主催者を変更しました" and return
+  end
+
+  def check_organizer
+    if @group.join_groups.find_by(organizer: true).present?
+      @organizer_id = @group.join_groups.organizer_id
     end
   end
 
