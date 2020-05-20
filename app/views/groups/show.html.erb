@@ -1,7 +1,62 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= "#{@group.name}のメンバー一覧" %></h1>
+
 <h3>グループに参加中のメンバー</h3>
+<% if @group.join_group_members.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @group.join_group_members.each do |group_member| %>
+        <tr>
+          <td><%= group_member.name %></td>
+          <td><%= @organizer_id == group_member.id ? "organizer" : "member" %></td>
+
+          <td>
+            <%= link_to '脱退する', join_group_path(group_id: @group.id, member_id: group_member.id), method: :delete, data: { confirm: '本当に脱退しますか？' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to '幹事を設定する', set_organizer_group_path(group_id: @group.id), method: :patch, data: { confirm: '設定しますか？' } %>
+<% else %>
+  <p>メンバーはいません</p>
+<% end %>
+
+
+<h3>グループに未参加のメンバー</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @not_belong_members.each do |a| %>
+      <tr>
+        <td><%= a.name %></td>
+        <td><%= link_to '参加する', join_groups_path(group_id: @group.id, member_id: a.id), method: :post %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+
+
+
+<%# @member.each do |member| %>
+ <!-- member.join_groups.where.not(group_id: @group) -->
+<%# end %>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>
