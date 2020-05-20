@@ -45,7 +45,7 @@
     <% @not_belong_members.each do |a| %>
       <tr>
         <td><%= a.name %></td>
-        <td><%= link_to '参加する', join_groups_path(group_id: @group.id, member_id: a.id), method: :post %></td>
+        <td><%= link_to '参加', join_groups_path(group_id: @group.id, member_id: a.id), method: :post %></td>
       </tr>
       <% end %>
   </tbody>
