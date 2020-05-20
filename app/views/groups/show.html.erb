@@ -26,11 +26,10 @@
       <% end %>
     </tbody>
   </table>
-  <%= link_to '幹事を設定する', set_organizer_group_path(group_id: @group.id), method: :patch, data: { confirm: '設定しますか？' } %>
+  <%= link_to '幹事を設定する', set_organizer_group_path(group_id: @group.id), method: :patch, data: { confirm: 'ランダムに幹事を設定しますか？' } %>
 <% else %>
   <p>メンバーはいません</p>
 <% end %>
-
 
 <h3>グループに未参加のメンバー</h3>
 <table>
@@ -50,13 +49,6 @@
       <% end %>
   </tbody>
 </table>
-
-
-
-
-<%# @member.each do |member| %>
- <!-- member.join_groups.where.not(group_id: @group) -->
-<%# end %>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>
