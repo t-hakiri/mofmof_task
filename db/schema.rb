@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_165601) do
+ActiveRecord::Schema.define(version: 2020_05_18_121038) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "organizer_id"
   end
 
   create_table "join_groups", force: :cascade do |t|
     t.integer "group_id"
     t.integer "member_id"
+    t.boolean "organizer", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_join_groups_on_group_id"
