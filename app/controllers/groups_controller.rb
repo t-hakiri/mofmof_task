@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy, :set_organizer]
+  before_action :check_organizer, only: [:show, :set_organizer]
 
   # GET /groups
   # GET /groups.json
@@ -12,8 +13,6 @@ class GroupsController < ApplicationController
   def show
     group_member_ids = @group.join_groups.map {|x| x.member_id}
     @not_belong_members = Member.all.where.not(id: group_member_ids)
-
-    check_organizer
   end
 
   # GET /groups/new
@@ -66,7 +65,6 @@ class GroupsController < ApplicationController
   end
 
   def set_organizer
-    check_organizer
     @group_members = @group.join_group_members
     next_organizer_id = @group_members.random
 
