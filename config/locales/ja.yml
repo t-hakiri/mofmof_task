@@ -25,3 +25,7 @@ ja:
     destroy:
       success: 'さんはこのグループから脱退しました'
       error: '不正な値が入力されました'
+
+  members:
+    index:
+      members: 'メンバー一覧'
