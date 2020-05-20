@@ -15,7 +15,7 @@ ja:
 
     set_organizer:
       success: 主催者を変更しました
-      not_enough_members: memberが足りないため変更ができません
+      not_enough_members: memberが足りないため幹事の変更ができません
 
   join_groups:
     create:
